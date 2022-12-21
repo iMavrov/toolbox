@@ -18,39 +18,39 @@ typedef Unit<float, -2, 1, 0> Acceleration;
 typedef Unit<float, 1, -1, 0> Pace;
 
 int main(int argc, const char **argv) {
-	const Distance lengthA(1);
-	const Distance lengthB(2);
-	const Distance lengthC(3);
+  const Distance lengthA(1);
+  const Distance lengthB(2);
+  const Distance lengthC(3);
 
-	std::cout << lengthA << std::endl;
+  std::cout << lengthA << std::endl;
 
-	const Duration duration(1);
+  const Duration duration(1);
 
-	std::cout << duration << std::endl;
+  std::cout << duration << std::endl;
 
-	const auto area = lengthA * lengthB;
+  const auto area = lengthA * lengthB;
 
-	std::cout << area << std::endl;
+  std::cout << area << std::endl;
 
-	const auto volume = area * lengthC;
+  const auto volume = area * lengthC;
 
-	std::cout << volume << std::endl;
+  std::cout << volume << std::endl;
 
-	const auto velocity = lengthA / duration;
+  const auto velocity = lengthA / duration;
 
-	std::cout << velocity << std::endl;
+  std::cout << velocity << std::endl;
 
-	const auto distance = velocity * duration;
+  const auto distance = velocity * duration;
 
-	std::cout << distance << std::endl;
+  std::cout << distance << std::endl;
 
-	const auto pace = Measureless(1) / velocity;
+  const auto pace = Measureless(1) / velocity;
 
-	std::cout << pace << std::endl;
+  std::cout << pace << std::endl;
 
-	const auto acceleration = velocity / duration;
+  const auto acceleration = velocity / duration;
 
-	std::cout << acceleration << std::endl;
-	
-	return 0;
+  std::cout << acceleration << std::endl;
+  
+  return 0;
 }
