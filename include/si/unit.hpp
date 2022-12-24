@@ -7,7 +7,7 @@ namespace toolbox {
 
 namespace si {
 
-/// @brief Implements units of measure semantics to simple numerical values.
+/// @brief Implements units of measure semantics for simple numerical values.
 /// Uses SI base units of measure and their combinations.
 ///
 /// @tparam T The numerical value type to store. Floating point type expected.
