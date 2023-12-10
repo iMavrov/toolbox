@@ -1,5 +1,6 @@
 #pragma once
 
+#include <math.h>
 #include <ratio>
 
 #include <type_traits>
@@ -8,7 +9,7 @@ namespace toolbox {
 
 namespace units {
 
-enum Derived {
+enum DecimalPower {
   ATTO     = -18,
   FEMTO    = -15,
   PICO     = -12,
@@ -17,7 +18,7 @@ enum Derived {
   MILLI    = -3,
   CENTI    = -2,
   DECI     = -1,
-  STANDARD = 0,
+  UNIT     = 0,
   DECA     = 1,
   HECTO    = 2,
   KILO     = 3,
@@ -28,32 +29,45 @@ enum Derived {
   EXA      = 18
 };
 
-template <typename T, Derived DecimalPower = STANDARD>
+template <typename T, int UnitPower = 1, int MultiplierPower = DecimalPower::UNIT>
 class Distance {
 public:
   static_assert(std::is_arithmetic<T>::value, "Distance expects an arithmetic type for 'T'");
+
   Distance() : value(0) {}
 
   explicit Distance(const T &value) : value(value) {}
 
   const T &Get() const { return value; }
 
-  template<int NewDecimalPower>
-  Distance<T, NewDecimalPower> To() const {
-    int 
-    return Distance<T, NewDecimalPower>(static_cast<T>(value * MULTIPLIERS[NewDecimalPower - DecimalPower]));
+  template<int NewMultiplierPower>
+  Distance<T, UnitPower, NewMultiplierPower> To() const {
+    return Distance<T, UnitPower, NewMultiplierPower>(static_cast<T>(value * pow(10.0, MultiplierPower - NewMultiplierPower)));
   }
 
-  Distance operator+(const Distance &rhs) const {
-
+  template<int OtherMultiplierPower>
+  Distance<T, UnitPower, MultiplierPower> operator+(const Distance<T, UnitPower, OtherMultiplierPower> &rhs) const {
+    return Distance<T, UnitPower, MultiplierPower>(value + rhs.To<MultiplierPower>().Get());
   }
 
-  Distance operator-(const Distance &rhs) const {
-    
+  template<int OtherMultiplierPower>
+  Distance<T, UnitPower, MultiplierPower> operator-(const Distance<T, UnitPower, OtherMultiplierPower> &rhs) const {
+    return Distance<T, UnitPower, MultiplierPower>(value - rhs.To<MultiplierPower>().Get());
+  }
+
+  template<int OtherUnitPower, int OtherMultiplierPower>
+  Distance<T, UnitPower + OtherUnitPower, MultiplierPower> operator*(const Distance<T, OtherUnitPower, OtherMultiplierPower> &rhs) const {
+    return Distance<T, UnitPower + OtherUnitPower, MultiplierPower>(value * rhs.To<MultiplierPower>().Get());
+  }
+
+  template<int OtherUnitPower, int OtherMultiplierPower>
+  Distance<T, UnitPower - OtherUnitPower, MultiplierPower> operator/(const Distance<T, OtherUnitPower, OtherMultiplierPower> &rhs) const {
+    return Distance<T, UnitPower - OtherUnitPower, MultiplierPower>(value / rhs.To<MultiplierPower>().Get());
   }
 
 private:
-  static constexpr Derived DECIMAL_POWER = DecimalPower;
+  static constexpr int UNIT_POWER = UnitPower;
+  static constexpr int MULTIPLIER_POWER = MultiplierPower;
   T value;
 };
 
