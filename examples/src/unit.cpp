@@ -1,35 +1,20 @@
-#include <iostream>
+#include <cstdio>
 
-#include <unordered_map>
+#include "units/unit.hpp"
 
-// #include "units/distance.hpp"
+int main(int argc, const char **argv) {
+  toolbox::unit::Unit<float> a(1);
+  printf("%f\n", a.To<std::milli>().Get());
+  printf("%f\n", a.Get());
+  printf("%f\n", a.To<std::ratio<13>>().Get());
 
-struct Data
-{
-  int counter;
+  toolbox::unit::Unit<float, std::milli> b(2);
 
-  explicit Data(const int counter = 0) : counter(counter) {}
+  auto c = a + b.To<std::ratio<1>>();
+  printf("%f\n", c.Get());
 
-  // Data(const Data &) = delete;
-
-  Data &operator=(const Data &) = delete;
-};
-
-int main(int argc, const char **argv)
-{
-  // toolbox::units::Distance<int> a(1);
-  // std::cout << a.Get() << std::endl;
-
-  std::unordered_map<void *, Data> m;
-
-  void *address = reinterpret_cast<void *>(1ul);
-
-  auto result = m.emplace(address, 13);
-  auto data = &(result.first->second);
-
-  ++m[address].counter;
-
-  m.insert(std::make_pair(address, 42));
+  toolbox::unit::Unit<int> i(static_cast<int>(a.Get()));
+  printf("%d\n", i.To<std::ratio<1, 13>>().Get());
 
   return 0;
 }

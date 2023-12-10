@@ -8,6 +8,6 @@ namespace units {
 
 typedef std::chrono::duration<std::chrono::seconds> Duration;
 
-} // units
+}  // namespace units
 
-} // toolbox
+}  // namespace toolbox
