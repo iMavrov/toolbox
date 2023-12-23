@@ -4,52 +4,11 @@
 #include <string>
 
 #include "quantity.hpp"
+#include "ratio_to_string.hpp"
 
 namespace toolbox {
 
 namespace unit {
-
-// template <typename Scale>
-// std::string ToString() {
-//   std::string result = std::to_string(value);
-//   if (Scale::num == 1) {
-//     switch (Scale::den) {
-//       case 10: {
-//         // deci
-//       }
-//       case 100: {
-//         // centi
-//       }
-//       case 1000: {
-//         // milli
-//       }
-//       case 1000000: {
-//         // micro
-//       }
-//       case 1000000000: {
-//         // nano
-//       }
-//       case 1000000000000: {
-//         // pico
-//       }
-//     }
-//   } else if (Scale::den == 1) {
-//     switch (Scale::num) {
-//       case 10:
-//       // deca
-//       case 100:
-//       // hecta
-//       case 1000:
-//       // kilo
-//       case 1000000:
-//       // mega
-//       case 1000000000:
-//       // tera
-//       case 1000000000000:
-//     }
-//   }
-//   return result;
-// }
 
 /// @brief Linear unit of measurement.
 /// @tparam QuantityTag SI
@@ -92,7 +51,8 @@ class Unit {
   }
 
   std::string ToString() {
-    return std::to_string(value) + Quantity(static_cast<Quantity::Value>(QuantityTag)).GetUnit();
+    const Quantity q(QuantityTag);
+    return std::to_string(value) + utils::ToString<Scale>() + q.GetUnit();
   }
 
   // x += y
@@ -118,15 +78,6 @@ class Unit {
     value /= rhs;
     return *this;
   }
-
-  // // Implementation of addition operator for different unit types
-  // template <typename T1, typename U1, typename T2, typename U2>
-  // auto operator+(const Unit<T1, U1> &lhs, const Unit<T2, U2> &rhs)
-  //     -> Unit<decltype(std::declval<T1>() + std::declval<T2>()), void> {
-  //   return Unit<decltype(std::declval<T1>() + std::declval<T2>()), void>(
-  //       lhs.convert<decltype(std::declval<T1>() + std::declval<T2>())>() +
-  //       rhs.convert<decltype(std::declval<T1>() + std::declval<T2>())>());
-  // }
 
   // x + y
   friend Unit operator+(const Unit &lhs, const Unit &rhs) { return Unit(lhs.value + rhs.value); }

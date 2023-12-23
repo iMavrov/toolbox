@@ -28,6 +28,8 @@ class Quantity {
     return properties.size() - 1u;
   }
 
+  explicit Quantity(unsigned int unknown_value) : value(static_cast<Value>(unknown_value)) {}
+
   Quantity(Value value) : value(value) {}
 
   operator Value() const { return value; }

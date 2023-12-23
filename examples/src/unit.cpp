@@ -1,6 +1,9 @@
 #include <cassert>
 #include <cstdio>
 
+#include <ratio>
+#include <string>
+
 #include "units/unit.hpp"
 
 typedef toolbox::unit::Unit<toolbox::unit::Quantity::kTime> Duration;
@@ -13,17 +16,21 @@ enum CustomQuantity : unsigned int {
 typedef toolbox::unit::Unit<kDegrees> Degrees;
 
 int main(int argc, const char **argv) {
-  const auto result = toolbox::unit::Quantity::RegisterCustomQuantity("deg");
-  assert(result == kDegrees);
+  // const auto result = toolbox::unit::Quantity::RegisterCustomQuantity("deg");
+  // assert(result == kDegrees);
 
-  Distance a;
+  // Distance a;
+  // printf("%s\n", a.ToString().c_str());
+
+  // Degrees d;
+  // printf("%s\n", d.ToString().c_str());
+
+  // printf("%s\n", toolbox::utils::ToString<std::milli>().c_str());
+
+  Distance a(1);
   printf("%s\n", a.ToString().c_str());
-
-  Degrees d;
-  printf("%s\n", d.ToString().c_str());
-
-  // toolbox::unit::Unit<toolbox::unit::kDistance, int> a(1);
-  // printf("%d\n", a.To<std::milli>().Get());
+  printf("%s\n", a.To<std::milli>().ToString().c_str());
+  printf("%s\n", a.To<std::kilo>().ToString().c_str());
   // printf("%d\n", a.Get());
   // printf("%d\n", a.To<std::ratio<13>>().Get());
 
