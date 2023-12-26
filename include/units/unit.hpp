@@ -11,13 +11,17 @@ namespace toolbox {
 namespace unit {
 
 /// @brief Linear unit of measurement.
-/// @tparam QuantityTag SI
-/// @tparam Type Type of stored value. Must be arithmetic.
-/// @tparam Scale Value multiplier to get the standard unit.
-template <unsigned int QuantityTag, typename Type = float, typename Scale = std::ratio<1>>
+/// @tparam Q Unit's quantity. See 'Quantity'.
+/// @tparam T Type of stored value. Must be arithmetic.
+/// @tparam S Value multiplier of the unit.
+template <unsigned int Q, typename T = float, typename S = std::ratio<1>>
 class Unit {
  public:
-  static_assert(std::is_arithmetic<Type>::value, "Unit expects an arithmetic type for 'Type'");
+  static_assert(std::is_arithmetic<T>::value, "Unit expects an arithmetic type for T");
+
+  static constexpr unsigned int QuantityTag = Q;
+  typedef T Type;
+  typedef S Scale;
 
   /// @brief
   Unit() : value(0) {}
@@ -94,7 +98,7 @@ class Unit {
   // x / a
   friend Unit operator/(const Unit &lhs, const Type &rhs) { return Unit(lhs.value / rhs); }
 
- protected:
+ private:
   Type value;
 };
 
