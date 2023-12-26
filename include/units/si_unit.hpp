@@ -7,8 +7,8 @@ namespace toolbox {
 
 namespace unit {
 
-template <int S = 0, int M = 0, int KG = 0, int A = 0, int K = 0, int Mol = 0, int Cd = 0>
-std::string GetTrivialName();
+template <typename U>
+std::string GetTrivialUnitName();
 
 /// @brief Implements units of measure semantics for simple numerical values.
 /// Uses SI base units of measure and their combinations.
@@ -42,9 +42,7 @@ class SIUnit {
 
   T Get() const { return value; }
 
-  std::string ToString() const {
-    return std::to_string(value) + GetTrivialName<S, M, KG, A, K, Mol, Cd>();
-  }
+  std::string ToString() const { return std::to_string(value) + GetTrivialUnitName<SIUnit>(); }
 
   SIUnit operator+(const SIUnit &rhs) const { return SIUnit(value + rhs.value); }
 
@@ -78,51 +76,51 @@ void AppendBaseUnitWithPower(const std::string &base_unit, int power, std::strin
   }
 }
 
-template <int S = 0, int M = 0, int KG = 0, int A = 0, int K = 0, int Mol = 0, int Cd = 0>
-std::string GetTrivialName() {
+template <typename U>
+std::string GetTrivialUnitName() {
   std::string numerator;
   std::string denominator;
 
-  if constexpr (KG < 0) {
-    AppendBaseUnitWithPower("kg", -KG, denominator);
-  } else if constexpr (0 < KG) {
-    AppendBaseUnitWithPower("kg", KG, numerator);
+  if constexpr (U::KILOGRAMS_POWER < 0) {
+    AppendBaseUnitWithPower("kg", -U::KILOGRAMS_POWER, denominator);
+  } else if constexpr (0 < U::KILOGRAMS_POWER) {
+    AppendBaseUnitWithPower("kg", U::KILOGRAMS_POWER, numerator);
   }
 
-  if constexpr (M < 0) {
-    AppendBaseUnitWithPower("m", -M, denominator);
-  } else if constexpr (0 < M) {
-    AppendBaseUnitWithPower("m", M, numerator);
+  if constexpr (U::METERS_POWER < 0) {
+    AppendBaseUnitWithPower("m", -U::METERS_POWER, denominator);
+  } else if constexpr (0 < U::METERS_POWER) {
+    AppendBaseUnitWithPower("m", U::METERS_POWER, numerator);
   }
 
-  if constexpr (S < 0) {
-    AppendBaseUnitWithPower("s", -S, denominator);
-  } else if constexpr (0 < S) {
-    AppendBaseUnitWithPower("s", S, numerator);
+  if constexpr (U::SECONDS_POWER < 0) {
+    AppendBaseUnitWithPower("s", -U::SECONDS_POWER, denominator);
+  } else if constexpr (0 < U::SECONDS_POWER) {
+    AppendBaseUnitWithPower("s", U::SECONDS_POWER, numerator);
   }
 
-  if constexpr (A < 0) {
-    AppendBaseUnitWithPower("A", -A, denominator);
-  } else if constexpr (0 < A) {
-    AppendBaseUnitWithPower("A", A, numerator);
+  if constexpr (U::AMPERES_POWER < 0) {
+    AppendBaseUnitWithPower("A", -U::AMPERES_POWER, denominator);
+  } else if constexpr (0 < U::AMPERES_POWER) {
+    AppendBaseUnitWithPower("A", U::AMPERES_POWER, numerator);
   }
 
-  if constexpr (K < 0) {
-    AppendBaseUnitWithPower("K", -K, denominator);
-  } else if constexpr (0 < K) {
-    AppendBaseUnitWithPower("K", K, numerator);
+  if constexpr (U::KELVINS_POWER < 0) {
+    AppendBaseUnitWithPower("K", -U::KELVINS_POWER, denominator);
+  } else if constexpr (0 < U::KELVINS_POWER) {
+    AppendBaseUnitWithPower("K", U::KELVINS_POWER, numerator);
   }
 
-  if constexpr (Mol < 0) {
-    AppendBaseUnitWithPower("mol", -Mol, denominator);
-  } else if constexpr (0 < Mol) {
-    AppendBaseUnitWithPower("mol", Mol, numerator);
+  if constexpr (U::MOLES_POWER < 0) {
+    AppendBaseUnitWithPower("mol", -U::MOLES_POWER, denominator);
+  } else if constexpr (0 < U::MOLES_POWER) {
+    AppendBaseUnitWithPower("mol", U::MOLES_POWER, numerator);
   }
 
-  if constexpr (Cd < 0) {
-    AppendBaseUnitWithPower("cd", -Cd, denominator);
-  } else if constexpr (0 < Cd) {
-    AppendBaseUnitWithPower("cd", Cd, numerator);
+  if constexpr (U::CANDELAS_POWER < 0) {
+    AppendBaseUnitWithPower("cd", -U::CANDELAS_POWER, denominator);
+  } else if constexpr (0 < U::CANDELAS_POWER) {
+    AppendBaseUnitWithPower("cd", U::CANDELAS_POWER, numerator);
   }
 
   if (!denominator.empty()) {

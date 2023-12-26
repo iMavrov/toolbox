@@ -16,10 +16,6 @@ typedef SIUnit<0, 0, 0, 0, 0, 1> Substance;
 typedef SIUnit<0, 0, 0, 0, 0, 0, 1> LuminousIntensity;
 
 typedef SIUnit<-1> Frequency;
-template <>
-std::string GetTrivialName<-1>() {
-  return "Hz";
-}
 
 typedef SIUnit<0, 2> Area;
 typedef SIUnit<0, 3> Volume;
@@ -28,26 +24,32 @@ typedef SIUnit<-1, 1> Velocity;
 typedef SIUnit<-2, 1> Acceleration;
 
 typedef SIUnit<-2, 1, 1> Force;
+typedef SIUnit<-2, -1, 1> Pressure;
+typedef SIUnit<-2, 2, 1> Energy;
+typedef SIUnit<-3, 2, 1> Power;
+
 template <>
-std::string GetTrivialName<-2, 1, 1>() {
+std::string GetTrivialUnitName<Frequency>() {
+  return "Hz";
+}
+
+template <>
+std::string GetTrivialUnitName<Force>() {
   return "N";
 }
 
-typedef SIUnit<-2, -1, 1> Pressure;
 template <>
-std::string GetTrivialName<-2, -1, 1>() {
+std::string GetTrivialUnitName<Pressure>() {
   return "Pa";
 }
 
-typedef SIUnit<-2, 2, 1> Energy;
 template <>
-std::string GetTrivialName<-2, 2, 1>() {
+std::string GetTrivialUnitName<Energy>() {
   return "J";
 }
 
-typedef SIUnit<-3, 2, 1> Power;
 template <>
-std::string GetTrivialName<-3, 2, 1>() {
+std::string GetTrivialUnitName<Power>() {
   return "W";
 }
 
