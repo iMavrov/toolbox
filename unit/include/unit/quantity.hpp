@@ -8,7 +8,6 @@ namespace toolbox {
 
 namespace unit {
 
-/// @brief
 class Quantity {
  public:
   enum Value : unsigned int {
@@ -70,9 +69,6 @@ class Quantity {
 
   Value value;
 };
-
-std::vector<Quantity::Properties> Quantity::properties = {{"s"}, {"m"},   {"g"}, {"A"},
-                                                          {"K"}, {"mol"}, {"cd"}};
 
 }  // namespace unit
 

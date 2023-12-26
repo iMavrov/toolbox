@@ -3,8 +3,9 @@
 #include <ratio>
 #include <string>
 
-#include "quantity.hpp"
-#include "ratio_to_string.hpp"
+#include "core/ratio_to_string.hpp"
+
+#include "unit/quantity.hpp"
 
 namespace toolbox {
 

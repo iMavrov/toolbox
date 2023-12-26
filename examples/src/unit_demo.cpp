@@ -4,7 +4,7 @@
 #include <ratio>
 #include <string>
 
-#include "units/unit.hpp"
+#include "unit/unit.hpp"
 
 typedef toolbox::unit::Unit<toolbox::unit::Quantity::kTime> Duration;
 typedef toolbox::unit::Unit<toolbox::unit::Quantity::kLength> Distance;

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "to_string.hpp"
-
 #include <ratio>
+
+#include "core/to_string.hpp"
 
 namespace toolbox {
 
