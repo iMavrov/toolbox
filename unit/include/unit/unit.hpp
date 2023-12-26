@@ -55,7 +55,7 @@ class Unit {
                                                 static_cast<NewType>(Quotient::den));
   }
 
-  std::string ToString() {
+  std::string ToString() const {
     const Quantity q(QuantityTag);
     return std::to_string(value) + utils::ToString<Scale>() + q.GetUnit();
   }

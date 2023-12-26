@@ -1,48 +1,32 @@
-#include <cassert>
-#include <cstdio>
-
-#include <ratio>
-#include <string>
+#include <iostream>
 
 #include "unit/unit.hpp"
 
-typedef toolbox::unit::Unit<toolbox::unit::Quantity::kTime> Duration;
-typedef toolbox::unit::Unit<toolbox::unit::Quantity::kLength> Distance;
-typedef toolbox::unit::Unit<toolbox::unit::Quantity::kMass> Weight;
+using namespace toolbox::unit;
+
+typedef Unit<Quantity::kLength> Meters;
+typedef Unit<Quantity::kLength, float, std::milli> Millimeters;
 
 enum CustomQuantity : unsigned int {
-  kDegrees = toolbox::unit::Quantity::kCustom,
+  kDegrees = Quantity::kCustom,
 };
-typedef toolbox::unit::Unit<kDegrees> Degrees;
+typedef Unit<kDegrees, int> Degrees;
 
 int main(int argc, const char **argv) {
-  // const auto result = toolbox::unit::Quantity::RegisterCustomQuantity("deg");
-  // assert(result == kDegrees);
+  const Meters a(1);
+  std::cout << "a = " << a.ToString() << " = " << a.To<std::milli>().ToString() << " = "
+            << a.To<std::kilo>().ToString() << std::endl;
 
-  // Distance a;
-  // printf("%s\n", a.ToString().c_str());
+  const Millimeters b(2);
+  std::cout << "b = " << b.ToString() << std::endl;
 
-  // Degrees d;
-  // printf("%s\n", d.ToString().c_str());
+  const auto c = a.To<std::milli>() + b;
+  std::cout << "c = a + b = " << c.ToString() << std::endl;
 
-  // printf("%s\n", toolbox::utils::ToString<std::milli>().c_str());
+  Quantity::RegisterCustomQuantity("deg");
 
-  Distance a(1);
-  printf("%s\n", a.ToString().c_str());
-  printf("%s\n", a.To<std::milli>().ToString().c_str());
-  printf("%s\n", a.To<std::kilo>().ToString().c_str());
-  // printf("%d\n", a.Get());
-  // printf("%d\n", a.To<std::ratio<13>>().Get());
-
-  // toolbox::unit::Unit<int, std::milli> b(2);
-
-  // auto c = a + b.To<std::ratio<1>>();
-  // printf("%d\n", c.Get());
-
-  // toolbox::unit::Unit<float> i(static_cast<float>(a.Get()));
-  // printf("%f\n", i.To<std::ratio<1, 13>>().Get());
-
-  // toolbox::unit::Unit<> d(42);
+  Degrees d(90);
+  std::cout << "d = " << d.ToString() << std::endl;
 
   return 0;
 }
