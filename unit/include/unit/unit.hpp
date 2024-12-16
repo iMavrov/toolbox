@@ -24,29 +24,29 @@ class Unit {
   typedef T Type;
   typedef S Scale;
 
-  /// @brief
+  /// @brief Constructs a unit with a value of zero.
   Unit() : value(0) {}
 
-  /// @brief
-  /// @param value
+  /// @brief Boxes a unitless constant giving it quantity and scale.
+  /// @param value The new unit's value.
   explicit Unit(const Type &value) : value(value) {}
 
-  /// @brief
-  /// @return
+  /// @brief Unboxes the unit to a unitless constant.
+  /// @return A copy of the unit's value.
   Type Get() const { return value; }
 
-  /// @brief
-  /// @tparam NewScale
-  /// @return
+  /// @brief Converts the unit and its value to a new scale.
+  /// @tparam NewScale The target scale.
+  /// @return A scaled copy of the unit with the same quantity and value type.
   template <typename NewScale>
   Unit<QuantityTag, Type, NewScale> To() const {
     return To<Type, NewScale>();
   }
 
-  /// @brief
-  /// @tparam NewType
-  /// @tparam NewScale
-  /// @return
+  /// @brief Converts the unit and its value to a new type and scale.
+  /// @tparam NewType The target type.
+  /// @tparam NewScale The target scale.
+  /// @return A scaled and converted copy of the unit with the same quantity.
   template <typename NewType, typename NewScale>
   Unit<QuantityTag, NewType, NewScale> To() const {
     typedef std::ratio_divide<Scale, NewScale> Quotient;
@@ -55,9 +55,10 @@ class Unit {
                                                 static_cast<NewType>(Quotient::den));
   }
 
+  /// @brief A human readable text representation of the unit.
+  /// @return A string representing the unit's value, scale and quantity.
   std::string ToString() const {
-    const Quantity q(QuantityTag);
-    return std::to_string(value) + utils::ToString<Scale>() + q.GetUnit();
+    return std::to_string(value) + utils::ToString<Scale>() + Quantity(QuantityTag).GetUnit();
   }
 
   // x += y
